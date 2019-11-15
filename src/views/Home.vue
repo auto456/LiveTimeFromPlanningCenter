@@ -87,7 +87,8 @@ export default {
       );
       const plans = await response.json();
       plans.data.forEach(async plan => {
-        var today = new Date("November 17, 2019");
+        var today = new Date();
+        today.setHours(0,0,0,0)
         if (today - new Date(plan.attributes.dates) == 0) {
           this.plan = plan;
           var timer = setInterval(callTime, 5000);
