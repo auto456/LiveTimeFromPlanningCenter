@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "postinstall": "npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "register-service-worker": "^1.6.2",
@@ -14,6 +16,8 @@
   "devDependencies": {
     "@vue/cli-plugin-pwa": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
+    "express": "^4.17.1",
+    "serve-static": "^1.14.1",
     "vue-template-compiler": "^2.6.10"
   },
   "postcss": {
