@@ -93,11 +93,11 @@ export default {
         today.setHours(0,0,0,0)
         if (today - new Date(plan.attributes.dates) == 0) {
           this.plan = plan;
-          // var timer = setInterval(callTime, 5000);
-          // var me = this;
-          // function callTime() {
-            this.getCurrentItemTime();
-          // }
+          var timer = setInterval(callTime, 5000);
+          var me = this;
+          function callTime() {
+            me.getCurrentItemTime();
+          }
         }
       });
     },
