@@ -7,6 +7,7 @@
       <p class="colon">:</p>
       <p class="seconds">{{secondsLeft}}</p>
     </div>
+    <p class="nextName" v-if="nextItem!=null">{{nextItem}}</p>
     <p class="name">{{itemName}}</p>
   </div>
 </template>
@@ -20,7 +21,8 @@ export default {
       timeNow: null,
       startTime: 0,
       plan: null,
-      currentItemTime: null
+      currentItemTime: null,
+      nextItem: null
     };
   },
   mounted: function() {
@@ -91,11 +93,11 @@ export default {
         today.setHours(0,0,0,0)
         if (today - new Date(plan.attributes.dates) == 0) {
           this.plan = plan;
-          var timer = setInterval(callTime, 5000);
-          var me = this;
-          function callTime() {
-            me.getCurrentItemTime();
-          }
+          // var timer = setInterval(callTime, 5000);
+          // var me = this;
+          // function callTime() {
+            this.getCurrentItemTime();
+          // }
         }
       });
     },
@@ -118,26 +120,46 @@ export default {
           currentItemTime.data.attributes.live_start_at
         );
         var currentItem = currentItemTime.data.relationships.item;
-        this.getItem(currentItem.data.id);
+        this.getItems(currentItem.data.id)
+        // this.getItem(currentItem.data.id);
       }
     },
-    async getItem(itemId) {
+    async getItems(itemId) {
       const response = await fetch(
         "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
           this.plan.id +
-          "/items/" +
-          itemId,
-        {
+          "/items",
+          {
           headers: {
             Authorization:
               "Basic MzRmMzY5OWNkMmFkZjc3YmFmOTNlMDJlZjUyYjU3YTYxYjI4MWIyNDcyZjRkZjQwM2E0NDE5ODI3NDM5ZmYyYjpmODBmYmVmNzA2Nzg2NjI4MDY3NTlhOTcyNTBhY2VjMTMxOTFhZGI5Y2Q5NzIxOGY1YjBmYTY0ZDUwYjBlOWVk"
           }
         }
       );
-      var item = await response.json();
-      this.itemName = item.data.attributes.title;
-      this.itemLength = item.data.attributes.length;
+      var items = await response.json();
+      var item = items.data.filter(item => item.id == itemId)[0] 
+      this.itemName = item.attributes.title;
+      this.itemLength = item.attributes.length;
+      var currentItemIndex = items.data.indexOf(item)
+      this.nextItem = (items.data[currentItemIndex+1]?items.data[currentItemIndex+1].attributes.title:"") +  (items.data[currentItemIndex+2]?" | " +items.data[currentItemIndex+2].attributes.title:"") +  (items.data[currentItemIndex+3]?" | " +items.data[currentItemIndex+3].attributes.title:"")
     }
+    // async getItem(itemId) {
+    //   const response = await fetch(
+    //     "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
+    //       this.plan.id +
+    //       "/items/" +
+    //       itemId,
+    //     {
+    //       headers: {
+    //         Authorization:
+    //           "Basic MzRmMzY5OWNkMmFkZjc3YmFmOTNlMDJlZjUyYjU3YTYxYjI4MWIyNDcyZjRkZjQwM2E0NDE5ODI3NDM5ZmYyYjpmODBmYmVmNzA2Nzg2NjI4MDY3NTlhOTcyNTBhY2VjMTMxOTFhZGI5Y2Q5NzIxOGY1YjBmYTY0ZDUwYjBlOWVk"
+    //       }
+    //     }
+    //   );
+    //   var item = await response.json();
+    //   this.itemName = item.data.attributes.title;
+    //   this.itemLength = item.data.attributes.length;
+    // }
   }
 };
 </script>
@@ -181,7 +203,20 @@ body {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  top: -10px;
+  top: -60px;
+  color: white;
+  font-size: 6vw;
+}
+.nextName {
+  font-family: "Helvetica Neue";
+  font-weight: 300;
+  height: 30px;
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  bottom: 20px;
   color: white;
   font-size: 3vw;
 }
