@@ -121,7 +121,6 @@ export default {
         );
         var currentItem = currentItemTime.data.relationships.item;
         this.getItems(currentItem.data.id)
-        // this.getItem(currentItem.data.id);
       }
     },
     async getItems(itemId) {
@@ -143,23 +142,6 @@ export default {
       var currentItemIndex = items.data.indexOf(item)
       this.nextItem = (items.data[currentItemIndex+1]?items.data[currentItemIndex+1].attributes.title:"") +  (items.data[currentItemIndex+2]?" | " +items.data[currentItemIndex+2].attributes.title:"") +  (items.data[currentItemIndex+3]?" | " +items.data[currentItemIndex+3].attributes.title:"")
     }
-    // async getItem(itemId) {
-    //   const response = await fetch(
-    //     "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
-    //       this.plan.id +
-    //       "/items/" +
-    //       itemId,
-    //     {
-    //       headers: {
-    //         Authorization:
-    //           "Basic MzRmMzY5OWNkMmFkZjc3YmFmOTNlMDJlZjUyYjU3YTYxYjI4MWIyNDcyZjRkZjQwM2E0NDE5ODI3NDM5ZmYyYjpmODBmYmVmNzA2Nzg2NjI4MDY3NTlhOTcyNTBhY2VjMTMxOTFhZGI5Y2Q5NzIxOGY1YjBmYTY0ZDUwYjBlOWVk"
-    //       }
-    //     }
-    //   );
-    //   var item = await response.json();
-    //   this.itemName = item.data.attributes.title;
-    //   this.itemLength = item.data.attributes.length;
-    // }
   }
 };
 </script>
