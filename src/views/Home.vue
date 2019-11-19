@@ -79,7 +79,8 @@ export default {
   methods: {
     async getCurrentPlan() {
       const response = await fetch(
-        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?order=-sort_date",
+        // "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?order=-sort_date",
+        "https://api.planningcenteronline.com/services/v2/service_types/349570/plans?order=-sort_date",
         {
           headers: {
             Authorization:
@@ -105,7 +106,8 @@ export default {
       await this.plan;
       if (this.plan != null) {
         const response = await fetch(
-          "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
+          // "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
+          "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
             this.plan.id +
             "/live/current_item_time",
           {
@@ -125,7 +127,8 @@ export default {
     },
     async getItems(itemId) {
       const response = await fetch(
-        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
+        // "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
+        "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
           this.plan.id +
           "/items",
           {
@@ -153,11 +156,11 @@ body {
   overflow: hidden;
 }
 .content {
-  font-size: 40vw;
+  font-size: 30vw;
   margin: 0px;
   display: flex;
   background-color: black;
-  padding-top: 90px;
+  padding-top: 110px;
 }
 .white {
   color: white;
@@ -174,7 +177,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 400px;
-  margin-top: -3vh !important;
+  margin-top: -20vh !important;
 }
 .name {
   font-family: "Helvetica Neue";
@@ -185,7 +188,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  top: -60px;
+  top: -30px;
   color: white;
   font-size: 6vw;
 }
