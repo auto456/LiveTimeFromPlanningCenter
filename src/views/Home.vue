@@ -79,8 +79,8 @@ export default {
   methods: {
     async getCurrentPlan() {
       const response = await fetch(
-        // "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?order=-sort_date",
-        "https://api.planningcenteronline.com/services/v2/service_types/349570/plans?order=-sort_date",
+        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?order=-sort_date",
+        // "https://api.planningcenteronline.com/services/v2/service_types/349570/plans?order=-sort_date",
         {
           headers: {
             Authorization:
