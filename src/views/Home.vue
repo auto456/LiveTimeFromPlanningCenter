@@ -90,7 +90,7 @@ export default {
       );
       const plans = await response.json();
       plans.data.forEach(async plan => {
-        var today = new Date();
+        var today = new Date('December 8, 2019');
         today.setHours(0,0,0,0)
         if (today - new Date(plan.attributes.dates) == 0) {
           this.plan = plan;
@@ -106,8 +106,8 @@ export default {
       await this.plan;
       if (this.plan != null) {
         const response = await fetch(
-          // "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
-          "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
+          "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
+          // "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
             this.plan.id +
             "/live/current_item_time",
           {
@@ -127,8 +127,8 @@ export default {
     },
     async getItems(itemId) {
       const response = await fetch(
-        // "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
-        "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
+        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
+        // "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
           this.plan.id +
           "/items",
           {
