@@ -160,7 +160,7 @@ body {
   margin: 0px;
   display: flex;
   background-color: black;
-  padding-top: 400px;
+  padding-top: 450px;
 }
 .white {
   color: white;
