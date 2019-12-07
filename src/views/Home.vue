@@ -205,7 +205,7 @@ body {
   color: white;
   font-size: 3vw;
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1000px) {
   .name {
     top: -10px;
   }
