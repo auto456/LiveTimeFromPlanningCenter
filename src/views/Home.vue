@@ -90,7 +90,7 @@ export default {
       );
       const plans = await response.json();
       plans.data.forEach(async plan => {
-        var today = new Date('December 8, 2019');
+        var today = new Date();
         today.setHours(0,0,0,0)
         if (today - new Date(plan.attributes.dates) == 0) {
           this.plan = plan;
@@ -188,7 +188,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  top: -60px;
+  top: -60px; 
   color: white;
   font-size: 6vw;
 }
@@ -205,7 +205,7 @@ body {
   color: white;
   font-size: 3vw;
 }
-@media only screen and (max-width: 1000px) {
+/* @media only screen and (max-width: 1000px) {
   .name {
     top: -10px;
   }
@@ -215,5 +215,5 @@ body {
   .nextName {
     bottom: 0px;
   }
-}
+} */
 </style>
