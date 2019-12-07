@@ -205,13 +205,15 @@ body {
   color: white;
   font-size: 3vw;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
   .name {
-    margin-top: 100px;
-    font-size: 10vw;
+    top: -10px;
   }
   .content {
-    padding-top: 250px;
+    padding-top: 140px;
+  }
+  .nextName {
+    bottom: 0px;
   }
 }
 </style>
