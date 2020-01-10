@@ -201,7 +201,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  bottom: 20px;
+  bottom: 80px;
   color: white;
   font-size: 3vw;
 }
