@@ -224,16 +224,19 @@ body {
   font-size: 3vw;
 }
 .loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid indianred; /* Blue */
-  border-radius: 50%;
-  width: 20vw;
-  height: 20vw;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-  position: absolute;
-  left: 38%;
-  top: 30%;
+  border: 16px solid #f3f3f3;
+    border-top: 16px solid indianred;
+    border-radius: 50%;
+    width: 34vh;
+    height: 34vh;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 30vh;
 }
 
 @keyframes spin {
@@ -246,15 +249,6 @@ body {
 }
 .loadingText {
   color: white;
-  font-size: 3vw;
-  font-family: monospace;
-  left: 26%;
-  top: 5%;
-  position: absolute;
-}
-@media only screen and (max-width: 1000px) {
-  .loadingText {
-    color: white;
     max-width: 210px;
     font-size: 4vh;
     text-align: center;
@@ -266,21 +260,9 @@ body {
     top: 41%;
     position: absolute;
     width: 100%;
-  }
-  .loader {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid indianred;
-    border-radius: 50%;
-    width: 34vh;
-    height: 34vh;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-  }
+}
+@media only screen and (max-width: 1000px) {
+
   .name {
     font-family: "Helvetica Neue";
     font-weight: 300;
@@ -301,7 +283,7 @@ body {
     width: 100vw;
     text-align: center;
     position: absolute;
-    bottom: 22vh;
+    bottom: 12vh;
     color: white;
     font-size: 3vh;
   }
