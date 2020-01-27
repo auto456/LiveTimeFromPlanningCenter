@@ -8,6 +8,7 @@
       <p class="seconds">{{secondsLeft}}</p>
     </div>
     <div class="emptyContent" v-else>
+      <div class="loadingText">No Service or just loading...</div>
       <div class="loader"></div>
     </div>
     <p class="nextName" v-if="nextItem!=null">{{nextItem}}</p>
@@ -120,7 +121,7 @@ export default {
         );
         var currentItemTime = await response.json();
         if (currentItemTime.errors && currentItemTime.errors[0].status == 404) {
-          this.$router.go()
+          this.itemLength = null;
         }
 
         this.startTime = new Date(
@@ -243,15 +244,66 @@ body {
     transform: rotate(360deg);
   }
 }
-/* @media only screen and (max-width: 1000px) {
-  .name {
-    top: -10px;
+.loadingText {
+  color: white;
+  font-size: 3vw;
+  font-family: monospace;
+  left: 26%;
+  top: 5%;
+  position: absolute;
+}
+@media only screen and (max-width: 1000px) {
+  .loadingText {
+    color: white;
+    max-width: 210px;
+    font-size: 4vh;
+    text-align: center;
+    font-family: monospace;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 41%;
+    position: absolute;
+    width: 100%;
   }
-  .content {
-    padding-top: 140px;
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid indianred;
+    border-radius: 50%;
+    width: 34vh;
+    height: 34vh;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+  }
+  .name {
+    font-family: "Helvetica Neue";
+    font-weight: 300;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 10vh;
+    color: white;
+    font-size: 5vh;
   }
   .nextName {
-    bottom: 0px;
+    font-family: "Helvetica Neue";
+    font-weight: 300;
+    height: 30px;
+    width: 100vw;
+    text-align: center;
+    position: absolute;
+    bottom: 22vh;
+    color: white;
+    font-size: 3vh;
   }
-} */
+}
 </style>
