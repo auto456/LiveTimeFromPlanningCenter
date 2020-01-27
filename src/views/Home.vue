@@ -1,11 +1,14 @@
 <template>
   <div>
-    <div class="content" :class="(minusTime)?'red':'white'">
+    <div class="content" :class="(minusTime)?'red':'white'" v-if="itemLength">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <p class="minus" v-if="minusTime">-</p>
       <p class="minutes">{{minusTime?minutesLeft-1:minutesLeft}}</p>
       <p class="colon">:</p>
       <p class="seconds">{{secondsLeft}}</p>
+    </div>
+    <div class="emptyContent" v-else>
+      <div class="loader"></div>
     </div>
     <p class="nextName" v-if="nextItem!=null">{{nextItem}}</p>
     <p class="name">{{itemName}}</p>
@@ -79,8 +82,7 @@ export default {
   methods: {
     async getCurrentPlan() {
       const response = await fetch(
-        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?order=-sort_date",
-        // "https://api.planningcenteronline.com/services/v2/service_types/349570/plans?order=-sort_date",
+        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?order=sort_date&filter=future",
         {
           headers: {
             Authorization:
@@ -91,7 +93,7 @@ export default {
       const plans = await response.json();
       plans.data.forEach(async plan => {
         var today = new Date();
-        today.setHours(0,0,0,0)
+        today.setHours(0, 0, 0, 0);
         if (today - new Date(plan.attributes.dates) == 0) {
           this.plan = plan;
           var timer = setInterval(callTime, 5000);
@@ -107,7 +109,6 @@ export default {
       if (this.plan != null) {
         const response = await fetch(
           "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
-          // "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
             this.plan.id +
             "/live/current_item_time",
           {
@@ -118,20 +119,23 @@ export default {
           }
         );
         var currentItemTime = await response.json();
+        if (currentItemTime.errors && currentItemTime.errors[0].status == 404) {
+          this.$router.go()
+        }
+
         this.startTime = new Date(
           currentItemTime.data.attributes.live_start_at
         );
         var currentItem = currentItemTime.data.relationships.item;
-        this.getItems(currentItem.data.id)
+        this.getItems(currentItem.data.id);
       }
     },
     async getItems(itemId) {
       const response = await fetch(
         "https://api.planningcenteronline.com/services/v2/service_types/227874/plans/" +
-        // "https://api.planningcenteronline.com/services/v2/service_types/349570/plans/" +
           this.plan.id +
           "/items",
-          {
+        {
           headers: {
             Authorization:
               "Basic MzRmMzY5OWNkMmFkZjc3YmFmOTNlMDJlZjUyYjU3YTYxYjI4MWIyNDcyZjRkZjQwM2E0NDE5ODI3NDM5ZmYyYjpmODBmYmVmNzA2Nzg2NjI4MDY3NTlhOTcyNTBhY2VjMTMxOTFhZGI5Y2Q5NzIxOGY1YjBmYTY0ZDUwYjBlOWVk"
@@ -139,11 +143,20 @@ export default {
         }
       );
       var items = await response.json();
-      var item = items.data.filter(item => item.id == itemId)[0] 
+      var item = items.data.filter(item => item.id == itemId)[0];
       this.itemName = item.attributes.title;
       this.itemLength = item.attributes.length;
-      var currentItemIndex = items.data.indexOf(item)
-      this.nextItem = (items.data[currentItemIndex+1]?items.data[currentItemIndex+1].attributes.title:"") +  (items.data[currentItemIndex+2]?" | " +items.data[currentItemIndex+2].attributes.title:"") +  (items.data[currentItemIndex+3]?" | " +items.data[currentItemIndex+3].attributes.title:"")
+      var currentItemIndex = items.data.indexOf(item);
+      this.nextItem =
+        (items.data[currentItemIndex + 1]
+          ? items.data[currentItemIndex + 1].attributes.title
+          : "") +
+        (items.data[currentItemIndex + 2]
+          ? " | " + items.data[currentItemIndex + 2].attributes.title
+          : "") +
+        (items.data[currentItemIndex + 3]
+          ? " | " + items.data[currentItemIndex + 3].attributes.title
+          : "");
     }
   }
 };
@@ -161,6 +174,10 @@ body {
   display: flex;
   background-color: black;
   padding-top: 450px;
+}
+.emptyContent {
+  background-color: black;
+  height: 1000px;
 }
 .white {
   color: white;
@@ -188,7 +205,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  top: -60px; 
+  top: -60px;
   color: white;
   font-size: 6vw;
 }
@@ -204,6 +221,27 @@ body {
   bottom: 80px;
   color: white;
   font-size: 3vw;
+}
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid indianred; /* Blue */
+  border-radius: 50%;
+  width: 20vw;
+  height: 20vw;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  left: 38%;
+  top: 30%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 /* @media only screen and (max-width: 1000px) {
   .name {
