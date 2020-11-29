@@ -83,7 +83,7 @@ export default {
   methods: {
     async getCurrentPlan() {
       const response = await fetch(
-        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?order=sort_date&filter=future",
+        "https://api.planningcenteronline.com/services/v2/service_types/227874/plans?filter=future&order=sort_date",
         {
           headers: {
             Authorization:
